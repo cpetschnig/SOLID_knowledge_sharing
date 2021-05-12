@@ -1,5 +1,9 @@
 require_relative '../lib/pay_event_correction_poster'
 
+class DummyPayInputLine
+  attr_accessor :business, :pay_event, :fixed_amount
+end
+
 RSpec.describe PayEventCorrectionPoster do
   subject { described_class.new(pay_event) }
 
@@ -25,6 +29,10 @@ RSpec.describe PayEventCorrectionPoster do
 
   describe '#call' do
     let(:amount) { 42 }
+
+    before do
+      described_class.pay_input_line_class = DummyPayInputLine
+    end
 
     it 'adds a new item to pay_input_lines' do
       expect { subject.call(amount) }.to change { pay_event.pay_input_lines.count }.by(1)

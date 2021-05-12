@@ -1,4 +1,8 @@
 class PayEventCorrectionPoster
+  class << self
+    attr_accessor :pay_input_line_class
+  end
+
   attr_reader :pay_event
 
   def initialize(pay_event)
@@ -14,7 +18,7 @@ class PayEventCorrectionPoster
       end
     end
 
-    correction = PayInputLine.new
+    correction = self.class.pay_input_line_class.new
     correction.business = pay_event.business
     correction.pay_event = pay_event
     correction.fixed_amount = amount.abs
