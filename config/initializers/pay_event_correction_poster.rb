@@ -1,0 +1,1 @@
+PayEventCorrectionPoster.pay_input_line_class = PayInputLine

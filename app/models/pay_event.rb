@@ -8,23 +8,9 @@ class PayEvent < ActiveRecord::Base
 
   # ...
 
-  # method with ~50 lines
+  # method one line
   def post_correction(amount)
-    pay_input_lines.each do |line|
-      if line.some_business_logic?(amount)
-        # do something
-      else
-        # do something else
-      end
-    end
-
-    correction = PayInputLine.new
-    correction.business = self.business
-    correction.pay_event = self
-    correction.fixed_amount = amount.abs
-    pay_input_lines << correction
-
-    save!
+    PayEventCorrectionPoster.new(self).call(amount)
   end
 
   # ...
